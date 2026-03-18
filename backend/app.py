@@ -54,7 +54,7 @@ class WorldResource(Resource):
             # Agregamos una bandera de éxito para que el front lo procese mejor
             return {
                 "status": "success",
-                "data": result,
+                "data": result, 
             }, 200
             
         except Exception as e:
