@@ -8,7 +8,7 @@ class Robot(Enemy):
     _spriteWidths: dict
     _stats: dict
 
-    def _init_(self):
+    def __init__(self):
         self._name= "Robot"
         self._era= "futuristic"
         self._spriteConfig= {

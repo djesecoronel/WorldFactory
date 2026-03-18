@@ -5,7 +5,7 @@ from src.interfaces.landscape import Landscape
 from src.factories.world_factory import WorldFactory
 
 class GameWorld:
-    def _init_(self, factory):
+    def __init__(self, factory):
         self.factory = factory
 
     def play(self):

@@ -2,7 +2,7 @@ from src.interfaces.hero import Hero
 
 class Yedai(Hero):
 
-    def _init_(self):
+    def __init__(self):
         super()._init_()
 
     def defend():

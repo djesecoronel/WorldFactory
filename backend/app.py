@@ -55,7 +55,6 @@ class WorldResource(Resource):
             return {
                 "status": "success",
                 "data": result,
-                "world_type": world_type
             }, 200
             
         except Exception as e:
