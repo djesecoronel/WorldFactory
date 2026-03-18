@@ -3,59 +3,79 @@ import SpriteAnimation from "./SpriteAnimation";
 export default function Hero({ data, action = "Idle" }) {
     if (!data) return null;
 
-    // 1. Ruta base: /assets/era/hero/nombre_de_archivo
-    const basePath = `/assets/${data.era}/hero/${action}`;
-
-    // 2. Extraemos la configuración de la Factory
-    // Ya no buscamos números, simplemente usamos lo que define la Factory
+    // --- LÓGICA DE VERSIÓN Y RUTA ---
+    // Usamos la versión que viene del backend (v1, v2, v3)
+    const version = data.spriteVersion || 'v1';
+    
+    // Construimos la ruta dinámica. 
+    // Si 'action' es 'Shot_1', la ruta será: /assets/futuristic/hero/v1/Shot_1
+    const basePath = `/assets/${data.era}/hero/${version}/${action}`;
+    
+    // Obtenemos los frames desde el config que enviamos en yedai.py
+    // Si no encuentra la acción, ponemos 1 para que al menos no rompa
     const totalFrames = data.spriteConfig?.[action] || 1;
-    const frameWidth = data.spriteWidths?.[action] || 150;
+    
+    // El ancho también lo sacamos del diccionario que creamos en el back
+    const frameWidth = data.spriteWidths?.[action] || 150; 
 
     return (
-        <div className="card hero-card" style={styles.card}>
-            <div style={styles.badge}>HÉROE</div>
+        <div style={styles.container}>
+            {/* 1. Badge flotante con la versión activa */}
+            <div style={styles.badge}>HÉROE - {version.toUpperCase()}</div>
             
-            <SpriteAnimation 
-                basePath={basePath} 
-                totalFrames={totalFrames} 
-                width={frameWidth} 
-                height={150} // Ajustado a la altura de tus imágenes
-                isAnimating={true} // Siempre animamos, ya que todos son sprite sheets
-            />
+            {/* 2. El Personaje con la animación dinámica */}
+            <div style={styles.spriteBox}>
+                <SpriteAnimation 
+                    key={`${version}-${action}`} // <-- TRUCO CRÍTICO: Fuerza a React a recargar si cambia el ataque
+                    basePath={basePath} 
+                    totalFrames={totalFrames} 
+                    width={frameWidth} 
+                    height={150} 
+                    isAnimating={true}
+                    flipHorizontal={false}
+                />
+            </div>
             
+            {/* 3. El Nombre del Personaje */}
             <h3 style={styles.name}>{data.name}</h3>
         </div>
     );
 }
 
 const styles = {
-    card: {
-        border: '4px solid #fff',
-        borderRadius: '0',
-        padding: '20px',
-        backgroundColor: 'rgba(0,0,0,0.85)',
-        textAlign: 'center',
-        width: '220px',
-        boxShadow: '10px 10px 0px rgba(0,0,0,0.5)',
+    container: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '300px',
+        minHeight: '250px',
+        position: 'relative'
     },
     badge: {
         fontSize: '12px',
         fontWeight: 'bold',
         color: 'white',
         backgroundColor: '#3498db',
-        padding: '4px 8px',
+        padding: '4px 10px',
         border: '2px solid #fff',
-        display: 'inline-block',
-        marginBottom: '15px',
-        fontFamily: 'Courier New, monospace'
+        fontFamily: 'Courier New, monospace',
+        marginBottom: '10px',
+        zIndex: 2
+    },
+    spriteBox: {
+        width: '100%',
+        height: '150px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        filter: 'drop-shadow(0px 5px 15px rgba(0,0,0,0.5))'
     },
     name: {
-        margin: '5px 0',
-        fontSize: '1.2rem',
+        margin: '10px 0 0 0',
+        fontSize: '1.8rem',
         color: '#FFD700',
-        fontFamily: 'Courier New, monospace'
+        fontFamily: 'Courier New, monospace',
+        textShadow: '2px 2px 4px #000'
     }
 };
