@@ -1,4 +1,4 @@
-from src.factory.world_factory import WorldFactory
+from src.factories.world_factory import WorldFactory
 
 from src.products.space_station import SpaceStation
 from src.products.robot import Robot

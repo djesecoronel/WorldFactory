@@ -2,9 +2,9 @@ from abc import ABC, abstractmethod
 
 class Enemy(ABC):
     
-    def __init__(self):
+    def _init_(self):
         pass
 
     @abstractmethod
-    def attack() -> str:
+    def to_dict() -> dict:
         pass

@@ -2,8 +2,8 @@ from flask import Flask
 from flask_restx import Api, Resource, fields
 from flask_cors import CORS  # <--- IMPORTANTE: Instalar con 'pip install flask-cors'
 
-from src.factory.medieval_world import MedievalWorld
-from src.factory.futuristic_world import FuturisticWorld
+from src.factories.medieval_world import MedievalWorld
+from src.factories.futuristic_world import FuturisticWorld
 from src.game_world import GameWorld
 
 app = Flask(__name__)

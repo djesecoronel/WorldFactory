@@ -1,13 +1,11 @@
-from typing import Final
-
 from src.interfaces.enemy import Enemy
 from src.interfaces.hero import Hero
 from src.interfaces.landscape import Landscape
 
-from src.factory.world_factory import WorldFactory
+from src.factories.world_factory import WorldFactory
 
 class GameWorld:
-    def __init__(self, factory):
+    def _init_(self, factory):
         self.factory = factory
 
     def play(self):
@@ -15,18 +13,8 @@ class GameWorld:
         enemy = self.factory.create_enemy()
         hero = self.factory.create_hero()
 
-        # Retornamos diccionarios con la info que el Front necesita
         return {
-            "landscape": {
-                "name": landscape.__class__.__name__,
-                "image": f"/images/{landscape.__class__.__name__.lower()}.png"
-            },
-            "enemy": {
-                "name": enemy.__class__.__name__,
-                "image": f"/images/{enemy.__class__.__name__.lower()}.png"
-            },
-            "hero": {
-                "name": hero.__class__.__name__,
-                "image": f"/images/{hero.__class__.__name__.lower()}.png"
-            }
+            "landscape": landscape.to_dict(),
+            "enemy": enemy.to_dict(),
+            "hero": hero.to_dict()
         }

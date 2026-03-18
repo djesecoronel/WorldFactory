@@ -1,4 +1,4 @@
-from src.factory.world_factory import WorldFactory
+from src.factories.world_factory import WorldFactory
 
 from src.products.castle import Castle
 from src.products.orc import Orc

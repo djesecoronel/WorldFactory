@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import MedievalWorldFactory from "../factories/MedievalWorldFactory";
-import FuturisticWorldFactory from "../factories/FuturisticWorldFactory";
 import { createWorldOnBackend } from "../services/api";
 import Hero from "../components/Hero";
 import Enemy from "../components/Enemy";
@@ -41,12 +39,9 @@ function GamePage() {
         try {
             const response = await createWorldOnBackend(type);
             if (response.status === "success") {
-                const factory = type === "medieval" ? new MedievalWorldFactory() : new FuturisticWorldFactory();
-                setWorld({
-                    hero: factory.createHero(),
-                    enemy: factory.createEnemy(),
-                    landscape: factory.createLandscape()
-                });
+                setWorld(
+                  response.data
+                );
             }
         } catch (error) {
             console.error("Error:", error);

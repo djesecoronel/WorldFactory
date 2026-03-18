@@ -2,9 +2,9 @@ from abc import ABC, abstractmethod
 
 class Hero(ABC):
 
-    def __init__(self):
+    def _init_(self):
         pass
 
     @abstractmethod
-    def defend() -> str:
+    def to_dict() -> str:
         pass
